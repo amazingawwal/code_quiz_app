@@ -41,23 +41,17 @@ var options = [
 // };
 
 function questions () {
-    var changeOption = options[1]["optn"]
-    changeTitle++
-    console.log(changeOption)
-    for (var i = 0; i<changeOption.length; i++){
-        var optionBtns = document.createElement("button")
-        optionBtns.textContent = changeOption[i]
-        choices.append(optionBtns)
+    // var changeOption = options[1]["optn"]
+    // changeTitle++
+    // console.log(changeOption)
+    for (var i = 0; i<options.length; i++){
+        var btn = document.createElement("button")
+        btn.textContent = options[i]
+        choices.append(btn)
+        qts_title.textContent = title[changeTitle]
     }
 };
 
-function questions () {
-   for (var i=0; i<4; i++){
-    for(var j=0; j<4; j++){
-        console.log(i)
-    }
-   }
-};
 
 
 
@@ -86,7 +80,7 @@ qts.addEventListener("click", function pickAnswer(event) {
 
 //show question on click of a button
 start_button = document.querySelector("#start")
-start_button.addEventListener("click", function start_quiz () {
+start_button.addEventListener("click", function () {
     qts.style.display = "contents"
     questions();
    
