@@ -87,6 +87,7 @@
 var qts = document.getElementById("questions");
 var qts_title = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
+var start = document.querySelector(".start")
 
 var changeTitle = 0;
 
@@ -107,15 +108,21 @@ var options = [
     }
 ];
 
+var answers = []
+
 // Horizontal Rule
 hr = document.createElement("hr")
 qts.appendChild(hr)
-//hr.setAttribute("class", "hide")
+hr.setAttribute("class", "hide")
 
 
 var showCorrect = document.createElement("h3")
-showCorrect.textContent = "Correct"
+showCorrect.textContent = ""
 qts.appendChild(showCorrect)
+
+var showWrong = document.createElement("h3")
+showWrong.textContent = ""
+qts.appendChild(showWrong)
 
 
 function questions() {
@@ -129,18 +136,33 @@ function questions() {
     qts_title.textContent = title[changeTitle];
 }
 
+function showCorrectMsg(){
+    showCorrect.textContent = "Correct";
+    hr.setAttribute("class", "content");
+};
+
+function showWrongMsg(){
+    showCorrect.textContent = "Wrong";
+    hr.setAttribute("class", "content");
+};
+
 qts.addEventListener("click", function pickAnswer(event) {
     if (event.target.tagName === "BUTTON") {
         var selectedOption = event.target.textContent;
 
-        // Check if the selected option is correct (customize this logic)
+        // Check if the selected option is correct 
         if (selectedOption === options[changeTitle]["optn"][1]) {
-            console.log("Correct!");
-            
+           showCorrectMsg()
         } else {
-            console.log("Wrong!");
-            
+            showWrongMsg();
         }
+
+        setTimeout(function () {
+            showCorrect.textContent = "";
+            showWrong.textContent = "";
+            hr.setAttribute("class", "hide");
+        }, 300);
+
 
         // Move to the next question
         changeTitle++;
@@ -153,9 +175,13 @@ qts.addEventListener("click", function pickAnswer(event) {
     }
 });
 
+showCorrect.textContent = ""
+
 var start_button = document.querySelector("#start");
 start_button.addEventListener("click", function () {
     qts.style.display = "block";
+    start.style.display = "none"
+
     questions();
 });
 
