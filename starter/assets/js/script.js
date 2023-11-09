@@ -88,7 +88,8 @@ var qts = document.getElementById("questions");
 var qts_title = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
 var start = document.querySelector(".start")
-
+var endScreen = document.querySelector("#end-screen")
+var showScore = document.querySelector("#final-score")
 var changeTitle = 0;
 
 var title = ["What does DOM stand for?", "What is the correct syntax for a JavaScript function?", "Which type of JavaScript language is this?", "Which one of the following is also known as Conditional Expression:"];
@@ -109,6 +110,7 @@ var options = [
 ];
 
 var answers = []
+var score = 0
 
 // Horizontal Rule
 hr = document.createElement("hr")
@@ -139,11 +141,17 @@ function questions() {
 function showCorrectMsg(){
     showCorrect.textContent = "Correct";
     hr.setAttribute("class", "content");
+    score+=5
 };
 
 function showWrongMsg(){
     showCorrect.textContent = "Wrong";
     hr.setAttribute("class", "content");
+};
+
+function showEndScreen(){
+    qts.style.display = "none";
+    endScreen.style.display = "block";
 };
 
 qts.addEventListener("click", function pickAnswer(event) {
@@ -156,7 +164,8 @@ qts.addEventListener("click", function pickAnswer(event) {
         } else {
             showWrongMsg();
         }
-
+        
+        //timeout function to show correct/wrong and hr
         setTimeout(function () {
             showCorrect.textContent = "";
             showWrong.textContent = "";
@@ -170,8 +179,10 @@ qts.addEventListener("click", function pickAnswer(event) {
             questions();
             
         } else {
-            console.log("Quiz completed");
+           showEndScreen();
         }
+
+        showScore.textContent = score
     }
 });
 
@@ -180,7 +191,7 @@ showCorrect.textContent = ""
 var start_button = document.querySelector("#start");
 start_button.addEventListener("click", function () {
     qts.style.display = "block";
-    start.style.display = "none"
+    start.style.display = "none";
 
     questions();
 });
