@@ -8,6 +8,7 @@ var showScore = document.querySelector("#final-score")
 var userInitials = document.querySelector("#initials")
 var submitBtn = document.querySelector("#submit")
 var orderedList = document.querySelector("#highScores")
+var timer = document.querySelector("#time")
 var changeTitle = 0;
 
 var title = ["What does DOM stand for?", "What is the correct syntax for a JavaScript function?", "Which type of JavaScript language is this?", "Which one of the following is also known as Conditional Expression:"];
@@ -29,7 +30,21 @@ var options = [
 
 var answers = ["ab-20","xc-30"]
 var score = 0
+// set time interval
+var intervalId;
+function setTimeInterval (){
+    intervalId = setInterval(function() {
+        timer.textContent++;
+        }, 1000);
+    
+    setTimeout(function() {
+    clearInterval(intervalId);
+    }, 60000);
+};
 
+function stopTimeInterval (){
+    clearInterval(intervalId);
+};
 
 
 // Horizontal Rule
@@ -72,11 +87,13 @@ function showWrongMsg(){
 function showEndScreen(){
     qts.style.display = "none";
     endScreen.style.display = "block";
+    
 };
 
 qts.addEventListener("click", function pickAnswer(event) {
     if (event.target.tagName === "BUTTON") {
         var selectedOption = event.target.textContent;
+
 
         // Check if the selected option is correct 
         if (selectedOption === options[changeTitle]["optn"][1]) {
@@ -101,6 +118,7 @@ qts.addEventListener("click", function pickAnswer(event) {
         } 
         else {
            showEndScreen();
+           stopTimeInterval();
         }
 
         showScore.textContent = score
@@ -111,21 +129,22 @@ qts.addEventListener("click", function pickAnswer(event) {
 
 
 
-//showCorrect.textContent = ""
+
 
 var start_button = document.querySelector("#start");
 start_button.addEventListener("click", function () {
     qts.style.display = "block";
     start.style.display = "none";
-
+    setTimeInterval();
     questions();
 });
 
 
 submitBtn.addEventListener("click", function(event){
     console.log(event.target);
-    var userInit = userInitials.value
-    localStorage.setItem("playerScore", ("1. " + userInit + "-" + score))
+    var userInit = userInitials.value;
+    localStorage.setItem("playerScore", ("1. " + userInit + "-" + score));
+    userInitials.value = "";
 })
 
 
@@ -133,3 +152,8 @@ submitBtn.addEventListener("click", function(event){
 // add text content
 // convert to string
 // store to local storage
+
+
+
+
+
